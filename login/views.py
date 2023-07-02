@@ -25,9 +25,11 @@ def signup(request):
                     "user": user,
                     "domain": current_site.domain,
                     "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                    "token": account_activation_token.make_token(user),
+
                 },
             )
-            user.email_user("Validation", message)
+            user.email_user("Please, validate the registration", message)
             return redirect("home")
     else:
         form = SignUpForm()
